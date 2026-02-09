@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Soft liquid background animation */
+
+.liquid {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(168, 85, 247, 0.45),
+    rgba(126, 34, 206, 0.35),
+    rgba(88, 28, 135, 0.25)
+  );
+  border-radius: 50%;
+  filter: blur(90px);
+  animation: float 22s ease-in-out infinite;
+}
+
+.liquid-1 {
+  top: -120px;
+  left: -120px;
+}
+
+.liquid-2 {
+  bottom: -140px;
+  right: -100px;
+  animation-delay: 6s;
+}
+
+.liquid-3 {
+  top: 35%;
+  right: 20%;
+  animation-delay: 12s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
