@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
-// This endpoint logs user feedback (demo mode - no file storage)
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { rating, message } = body;
 
-    // Simple validation
     if (!rating) {
       return NextResponse.json(
         { error: "Rating is required" },
@@ -14,17 +15,24 @@ export async function POST(req: Request) {
       );
     }
 
-    // DEMO: Just log feedback instead of saving to file
-    console.log("NEW FEEDBACK:", {
-      rating,
-      message: message || "",
-      createdAt: new Date().toISOString(),
+    await resend.emails.send({
+      from: "FIXx.ai <onboarding@resend.dev>",
+      to: "umutfixxai@gmail.com",
+      subject: "New FIXx.ai Feedback",
+      html: `
+        <h2>New Feedback Received</h2>
+        <p><strong>Rating:</strong> ${rating}</p>
+        <p><strong>Message:</strong> ${message || "No message"}</p>
+        <p><strong>Date:</strong> ${new Date().toISOString()}</p>
+      `,
     });
 
     return NextResponse.json({ success: true });
   } catch (err) {
+    console.error("EMAIL ERROR:", err);
+
     return NextResponse.json(
-      { error: "Failed to save feedback" },
+      { error: "Failed to send feedback email" },
       { status: 500 }
     );
   }
