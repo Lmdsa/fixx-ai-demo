@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: "umutfixxai@gmail.com",
+      to: "umut23052000@gmail.com",
       subject: "New FIXx.ai Feedback",
       html: `
         <h2>New Feedback Received</h2>
